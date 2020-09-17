@@ -1,48 +1,40 @@
 package com.depromeet.tmp.user.dto;
 
-import java.util.Objects;
-
-import com.depromeet.tmp.user.domain.User;
-import com.depromeet.tmp.util.EncryptionUtils;
+import javax.validation.constraints.NotBlank;
 
 public class UserSignUpRequest {
 
+	@NotBlank
 	private String email;
 
+	@NotBlank
 	private String password1;
 
+	@NotBlank
 	private String password2;
-
-	private UserSignUpRequest() {
-	}
-
-	public UserSignUpRequest(String email, String password1, String password2) {
-		this.email = email;
-		this.password1 = password1;
-		this.password2 = password2;
-	}
-
-	public boolean validate() {
-		Objects.requireNonNull(this.email, "email이 비었습니다.");
-		Objects.requireNonNull(this.password1, "password1이 비었습니다.");
-		Objects.requireNonNull(this.password2, "password2가 비었습니다.");
-		return Objects.equals(this.password1, this.password2);
-	}
-
-	public User toEntityWithPasswordEncoder() {
-		return new User(this.email, EncryptionUtils.encryptSHA256(this.password1));
-	}
 
 	public String getEmail() {
 		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getPassword1() {
 		return password1;
 	}
 
+	public void setPassword1(String password1) {
+		this.password1 = password1;
+	}
+
 	public String getPassword2() {
 		return password2;
+	}
+
+	public void setPassword2(String password2) {
+		this.password2 = password2;
 	}
 
 }
