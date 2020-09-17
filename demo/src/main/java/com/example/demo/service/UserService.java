@@ -14,6 +14,8 @@ public class UserService {
 
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     /**
      * Register User
@@ -24,7 +26,7 @@ public class UserService {
                 new User()
                         .builder()
                         .email(request.getEmail())
-                        .password(request.getPassword())
+                        .password(passwordEncoder.encode(request.getPassword()))
                         .name(request.getName())
                         .build());
 
