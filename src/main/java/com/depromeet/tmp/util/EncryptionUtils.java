@@ -2,6 +2,9 @@ package com.depromeet.tmp.util;
 
 import java.security.MessageDigest;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class EncryptionUtils {
 
 	public static String encryptSHA256(String s) {
@@ -24,6 +27,7 @@ public class EncryptionUtils {
 			return sb.toString();
 		}
 		catch (Exception e) {
+			log.error("EncryptionUtils Error Message: " + e.toString());
 			return s;
 		}
 	}
