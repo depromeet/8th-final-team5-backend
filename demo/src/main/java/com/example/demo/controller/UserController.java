@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api")
 public class UserController {
@@ -18,7 +20,7 @@ public class UserController {
     UserService userService;
 
     @PostMapping("/user/signup")
-    public ResponseEntity signup(@RequestBody RegisterRequest request) {
+    public ResponseEntity signup(@RequestBody @Valid RegisterRequest request) {
         if(userService.register(request).isPresent()) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
