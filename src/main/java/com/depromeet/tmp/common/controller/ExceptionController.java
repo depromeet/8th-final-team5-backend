@@ -1,12 +1,14 @@
 package com.depromeet.tmp.common.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.depromeet.tmp.common.exception.DuplicateEmailException;
-import com.depromeet.tmp.common.exception.NotEqualsPasswordException;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @ControllerAdvice
 public class ExceptionController {
 
@@ -15,9 +17,9 @@ public class ExceptionController {
 		return ResponseEntity.badRequest().body(e.getMessage());
 	}
 
-	@ExceptionHandler(NotEqualsPasswordException.class)
-	public ResponseEntity NotMatchPasswordException(Exception e) {
-		return ResponseEntity.badRequest().body(e.getMessage());
+	@ExceptionHandler(BindException.class)
+	public ResponseEntity validationException(BindException e) {
+		return ResponseEntity.badRequest().body(e.getFieldError().getDefaultMessage());
 	}
 
 }

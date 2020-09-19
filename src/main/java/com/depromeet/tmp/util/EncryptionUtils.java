@@ -11,23 +11,19 @@ public class EncryptionUtils {
 		return encrypt(s, "SHA-256");
 	}
 
-	public static String encryptMD5(String s) {
-		return encrypt(s, "MD5");
-	}
-
-	public static String encrypt(String s, String messageDigest) {
+	private static String encrypt(String s, String messageDigest) {
 		try {
 			MessageDigest md = MessageDigest.getInstance(messageDigest);
 			byte[] passBytes = s.getBytes();
 			md.reset();
 			byte[] digested = md.digest(passBytes);
-			StringBuilder sb = new StringBuilder();
+			StringBuffer sb = new StringBuffer();
 			for(int i = 0; i < digested.length; ++i)
 				sb.append(Integer.toHexString(0xff & digested[i]));
 			return sb.toString();
 		}
 		catch (Exception e) {
-			log.error("EncryptionUtils Error Message: " + e.toString());
+			log.error("EncryptionUtils Error Message : {}", e.toString());
 			return s;
 		}
 	}
