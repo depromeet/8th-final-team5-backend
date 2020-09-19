@@ -23,7 +23,7 @@ public class EncryptionUtils {
 			return sb.toString();
 		}
 		catch (Exception e) {
-			log.error("EncryptionUtils Error Message : {}", e.toString());
+			log.error("EncryptionUtils Error Message : {}", e);
 			return s;
 		}
 	}
