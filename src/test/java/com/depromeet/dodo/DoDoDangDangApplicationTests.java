@@ -1,8 +1,8 @@
-package com.depromeet.tmp;
+package com.depromeet.dodo;
 
 import org.junit.jupiter.api.Test;
 
-class ApplicationTests {
+class DoDoDangDangApplicationTests {
 
 	@Test
 	void contextLoads() {
