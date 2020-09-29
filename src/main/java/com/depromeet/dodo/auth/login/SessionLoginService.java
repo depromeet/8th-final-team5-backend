@@ -15,12 +15,14 @@ public class SessionLoginService implements LoginService {
 
     @Override
     public void login(User user) {
+
         // TODO : 리팩토링 하기
         httpSession.setAttribute("userId", user.getId());
     }
 
     @Override
     public long getCurrentUserId() {
+
         // TODO : 리팩토링 하기
         String loginUserId = (String) httpSession.getAttribute("userId");
 

@@ -17,6 +17,7 @@ public class NaverAuthService implements ThirdPartyAuthService<NaverSignUpReques
 
     @Override
     public void signUp(NaverSignUpRequest request) {
+
         NaverUserProfile naverProfile = naverAuthApiService.getNaverProfile(request.getToken());
 
         // TODO : 회원가입 처리 - 추가 설계는 숙제
@@ -24,6 +25,7 @@ public class NaverAuthService implements ThirdPartyAuthService<NaverSignUpReques
 
     @Override
     public void signIn(NaverSignInRequest request) {
+
         NaverUserProfile naverProfile = naverAuthApiService.getNaverProfile(request.getToken());
 
         // TODO : 로그인 처리 - 추가 설계는 숙제

@@ -45,6 +45,7 @@ public class NaverAuthApiService {
 
     @Getter
     public static class NaverProfileResponse {
+
         private String resultCode;
         private String message;
         private NaverUserProfile naverProfile;
