@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 @Component
 public class KakaoAuthApiService {
 
-	// kakao api 문서 : https://developers.kakao.com/docs/latest/ko/user-mgmt/rest-api#req-user-info
+	// kakao api 문서 : https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api#req-user-info
 	private static final String KAKAO_PROFILE_URL = "https://kapi.kakao.com/v2/user/me";
 
 	private final WebClient apiWebClient;
