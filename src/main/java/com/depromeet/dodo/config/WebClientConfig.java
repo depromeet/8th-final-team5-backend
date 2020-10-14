@@ -2,6 +2,7 @@ package com.depromeet.dodo.config;
 
 import io.netty.channel.ChannelOption;
 import io.netty.handler.timeout.ReadTimeoutHandler;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -15,6 +16,7 @@ import java.util.concurrent.TimeUnit;
 @Configuration
 public class WebClientConfig {
 
+    @Bean
     public WebClient apiWebClient() {
 
         final ReactorClientHttpConnector connector = new ReactorClientHttpConnector(
