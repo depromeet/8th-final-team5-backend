@@ -1,13 +1,13 @@
-package com.depromeet.tmp;
+package com.depromeet.dodo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Application {
+public class DDDDApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
+		SpringApplication.run(DDDDApplication.class, args);
 	}
 
 }
