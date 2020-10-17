@@ -32,7 +32,7 @@ public class KakaoAuthApiService {
 
 	@Getter
 	@AllArgsConstructor
-	public static class KakaoErrorResponse {
+	public class KakaoErrorResponse {
 		private int code;
 		private String msg;
 	}
