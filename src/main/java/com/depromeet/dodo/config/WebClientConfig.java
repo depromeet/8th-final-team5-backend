@@ -19,7 +19,6 @@ public class WebClientConfig {
 
 	@Bean
 	public WebClient apiWebClient() {
-
 		final ReactorClientHttpConnector connector = new ReactorClientHttpConnector(
 			HttpClient.from(
 				TcpClient.create()
