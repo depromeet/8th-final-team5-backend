@@ -4,7 +4,7 @@ echo $payload > payload.txt
 
 action=`python -c 'import json, os; d = json.loads(open("payload.txt").read()); print d["action"]'`
 
-if [ $action != "opened" ] || [ $action != "reopened" ]; then exit ; fi
+if [ $action != "opened" ] || [ $action != "reopened" ] || [ $action != "edited" ]; then exit ; fi
 
 curl_url=`python -c 'import json, os; d = json.loads(open("payload.txt").read()); print d["pull_request"]["statuses_url"]'`
 pr_branch=`python -c 'import json, os; d = json.loads(open("payload.txt").read()); print d["pull_request"]["head"]["ref"]'`
