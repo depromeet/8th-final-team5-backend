@@ -13,9 +13,7 @@ git clone -b $pr_branch --single-branch https://github.com/depromeet/8th-final-t
 
 cd 8th-final-team5-backend
 
-./mvnw test > build.txt
-
-result=`cat build.txt | grep -q "BUILD FAILURE" ; echo $?`
+result=`echo \`./mvnw test\` | grep -q "BUILD FAILURE"; echo $?`
 
 if [ $result == "1" ]; then \
 	curl "${curl_url}" \
