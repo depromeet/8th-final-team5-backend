@@ -1,8 +1,18 @@
-package com.depromeet.dodo.user;
+package com.depromeet.dodo.common.dto;
 
 public enum Gender {
 
-	MALE, FEMALE;
+	MALE("MALE"), FEMALE("FEMALE");
+
+	private String gender;
+
+	Gender(String gender) {
+		this.gender = gender;
+	}
+
+	public String getGender() {
+		return gender;
+	}
 
 	public static Gender of(String genderString) {
 		switch(genderString) {

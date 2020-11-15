@@ -1,21 +1,24 @@
 
 CREATE DATABASE dodo;
 
-CREATE TABLE User
+create table User
 (
-	id int auto_increment,
+	id bigint auto_increment primary key,
+	uid varchar(100) null,
 	username varchar(100) not null,
-	gender varchar(10) null,
-	age int null,
+	gender varchar(10) not null,
+	age int not null,
 	address varchar(200) null,
 	introduce varchar(200) null,
-	constraint User_pk
-		primary key (id)
+	profileImageUrl varchar(500) null,
+	petId bigint not null,
+	constraint uid
+		unique (uid)
 );
 
-CREATE TABLE pet
+CREATE TABLE Pet
 (
-	id int auto_increment,
+	id bigint auto_increment,
 	name varchar(50) not null,
 	gender varchar(10) not null,
 	age int not null,

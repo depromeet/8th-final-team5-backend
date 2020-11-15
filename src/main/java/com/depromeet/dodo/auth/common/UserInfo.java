@@ -1,6 +1,6 @@
 package com.depromeet.dodo.auth.common;
 
-import com.depromeet.dodo.user.Gender;
+import com.depromeet.dodo.common.dto.Gender;
 import lombok.Builder;
 import lombok.Getter;
 
