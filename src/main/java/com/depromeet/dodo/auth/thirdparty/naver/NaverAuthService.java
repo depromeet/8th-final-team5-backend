@@ -1,11 +1,13 @@
 package com.depromeet.dodo.auth.thirdparty.naver;
 
 
+import com.depromeet.dodo.auth.common.UserInfo;
 import com.depromeet.dodo.auth.thirdparty.ThirdPartyAuthService;
 import com.depromeet.dodo.auth.thirdparty.naver.api.NaverAuthApiService;
 import com.depromeet.dodo.auth.thirdparty.naver.dto.NaverUserProfile;
 import com.depromeet.dodo.auth.thirdparty.naver.request.NaverSignInRequest;
 import com.depromeet.dodo.auth.thirdparty.naver.request.NaverSignUpRequest;
+import com.depromeet.dodo.user.Gender;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -29,5 +31,16 @@ public class NaverAuthService implements ThirdPartyAuthService<NaverSignUpReques
         NaverUserProfile naverProfile = naverAuthApiService.getNaverProfile(request.getToken());
 
         // TODO : 로그인 처리 - 추가 설계는 숙제
+    }
+
+    @Override
+    public UserInfo getUserInfo(String userId, String token) {
+        NaverUserProfile naverProfile = naverAuthApiService.getNaverProfile(token);
+
+        return UserInfo.builder()
+                .name(naverProfile.getName())
+                .gender(Gender.of(naverProfile.getGender()))
+                .profileImageUrl(naverProfile.getProfileImage())
+                .build();
     }
 }
