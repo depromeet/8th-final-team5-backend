@@ -4,14 +4,3 @@ spring:
     url: jdbc:mysql://localhost:3306/dodo?useUnicode=true&characterEncoding=utf8
     username:
     password:
-
-  jpa:
-    hibernate:
-      ddl-auto: validate
-      naming:
-        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-    properties:
-      show_sql: true
-      format_sql: true
