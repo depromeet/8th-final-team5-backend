@@ -10,9 +10,9 @@ import lombok.Getter;
 @AllArgsConstructor
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class KakaoUserProfile {
-
 	private String id;
-	private String nickname;
-	private String profileImageUrl;
-
+	private String name;
+	private String email;
+	private String gender;
+	private String profileImage;
 }

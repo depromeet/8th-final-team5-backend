@@ -15,10 +15,12 @@ public enum Gender {
 	}
 
 	public static Gender of(String genderString) {
-		switch(genderString) {
+		switch (genderString) {
 			case "F":
+			case "female":
 				return FEMALE;
 			case "M":
+			case "male":
 				return MALE;
 			default:
 				throw new IllegalArgumentException("잘못된 성별 코드가 입력되었습니다 : " + genderString);
