@@ -9,4 +9,5 @@ public class ResponseEntityConstants {
 	}
 
 	public static final ResponseEntity<Void> CREATED = ResponseEntity.status(HttpStatus.CREATED).build();
+	public static final ResponseEntity<Void> OK = ResponseEntity.status(HttpStatus.OK).build();
 }
