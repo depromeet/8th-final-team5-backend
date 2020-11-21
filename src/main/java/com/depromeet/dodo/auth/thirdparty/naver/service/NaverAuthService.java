@@ -1,11 +1,11 @@
 package com.depromeet.dodo.auth.thirdparty.naver.service;
 
-import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
 import com.depromeet.dodo.auth.common.UserInfo;
+import com.depromeet.dodo.auth.login.SessionLoginService;
 import com.depromeet.dodo.auth.thirdparty.AuthService;
 import com.depromeet.dodo.auth.thirdparty.naver.api.NaverAuthApiService;
 import com.depromeet.dodo.auth.thirdparty.naver.dto.NaverUserProfile;
@@ -25,12 +25,11 @@ import lombok.RequiredArgsConstructor;
 public class NaverAuthService implements AuthService<NaverSignUpRequest, NaverSignInRequest> {
 
 	private static final String UID_POSTFIX = "@NAVER";
-	private static final String SESSION_LOGIN_KEY = "UID";
 
+	private final SessionLoginService sessionLoginService;
 	private final NaverAuthApiService naverAuthApiService;
 	private final UserService userService;
 	private final PetService petService;
-	private final HttpSession httpSession;
 
 	private final UserRepository userRepository;
 
@@ -72,7 +71,12 @@ public class NaverAuthService implements AuthService<NaverSignUpRequest, NaverSi
 		if (naverProfile.getId().equals(request.getPrincipal())) {
 			userRepository.findByUid(request.getPrincipal().concat(UID_POSTFIX))
 				.orElseThrow(() -> new SecurityException("회원가입이 필요한 사용자입니다."));
-			httpSession.setAttribute(SESSION_LOGIN_KEY, request.getPrincipal());
+
+			User user = User.builder()
+				.uid(request.getCredential())
+				.build();
+
+			sessionLoginService.login(user);
 		} else {
 			throw new IllegalArgumentException("잘못된 UID 입니다. : " + request.getPrincipal());
 		}

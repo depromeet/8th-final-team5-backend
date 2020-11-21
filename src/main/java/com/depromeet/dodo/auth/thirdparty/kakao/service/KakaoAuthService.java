@@ -1,11 +1,11 @@
 package com.depromeet.dodo.auth.thirdparty.kakao.service;
 
-import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
 import com.depromeet.dodo.auth.common.UserInfo;
+import com.depromeet.dodo.auth.login.SessionLoginService;
 import com.depromeet.dodo.auth.thirdparty.AuthService;
 import com.depromeet.dodo.auth.thirdparty.kakao.api.KakaoAuthApiService;
 import com.depromeet.dodo.auth.thirdparty.kakao.request.KakaoSignInRequest;
@@ -25,10 +25,9 @@ import lombok.RequiredArgsConstructor;
 public class KakaoAuthService implements AuthService<KakaoSignUpRequest, KakaoSignInRequest> {
 
 	private static final String UID_POSTFIX = "@KAKAO";
-	private static final String SESSION_LOGIN_KEY = "UID";
 
+	private final SessionLoginService sessionLoginService;
 	private final KakaoAuthApiService kakaoAuthApiService;
-	private final HttpSession httpSession;
 	private final UserService userService;
 	private final PetService petService;
 
@@ -71,7 +70,12 @@ public class KakaoAuthService implements AuthService<KakaoSignUpRequest, KakaoSi
 		if (kakaoProfile.getId().equals(request.getPrincipal())) {
 			userRepository.findByUid(request.getCredential().concat(UID_POSTFIX))
 				.orElseThrow(() -> new SecurityException("회원가입이 필요한 사용자입니다."));
-			httpSession.setAttribute(SESSION_LOGIN_KEY, request.getPrincipal());
+
+			User user = User.builder()
+				.uid(request.getCredential())
+				.build();
+
+			sessionLoginService.login(user);
 		} else {
 			throw new IllegalArgumentException("잘못된 UID 입니다. : " + request.getPrincipal());
 		}
