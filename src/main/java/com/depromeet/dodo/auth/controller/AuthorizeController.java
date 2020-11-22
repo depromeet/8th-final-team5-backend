@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.depromeet.dodo.auth.common.UserInfo;
+import com.depromeet.dodo.auth.thirdparty.kakao.request.KakaoSignInRequest;
 import com.depromeet.dodo.auth.thirdparty.kakao.request.KakaoSignUpRequest;
 import com.depromeet.dodo.auth.thirdparty.kakao.service.KakaoAuthService;
-import com.depromeet.dodo.auth.thirdparty.naver.NaverAuthService;
+import com.depromeet.dodo.auth.thirdparty.naver.request.NaverSignInRequest;
 import com.depromeet.dodo.auth.thirdparty.naver.request.NaverSignUpRequest;
+import com.depromeet.dodo.auth.thirdparty.naver.service.NaverAuthService;
 
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +39,6 @@ public class AuthorizeController {
 	@ApiOperation("네이버로 회원가입하기")
 	public ResponseEntity<Void> naverSignUp(@RequestBody NaverSignUpRequest signUpRequest) {
 		naverAuthService.signUp(signUpRequest);
-
 		return CREATED;
 	}
 
@@ -52,6 +53,20 @@ public class AuthorizeController {
 	public ResponseEntity<Void> kakaoSignUp(@RequestBody KakaoSignUpRequest signUpRequest) {
 		kakaoAuthService.signUp(signUpRequest);
 		return CREATED;
+	}
+
+	@PostMapping("/third-parties/kakao/sign-in")
+	@ApiOperation("카카오로 로그인하기")
+	public ResponseEntity<Void> kakaoLogin(@RequestBody KakaoSignInRequest signInRequest) {
+		kakaoAuthService.signIn(signInRequest);
+		return OK;
+	}
+
+	@PostMapping("/third-parties/naver/sign-in")
+	@ApiOperation("네이버로 로그인하기")
+	public ResponseEntity<Void> naverLogin(@RequestBody NaverSignInRequest signInRequest) {
+		naverAuthService.signIn(signInRequest);
+		return OK;
 	}
 
 }

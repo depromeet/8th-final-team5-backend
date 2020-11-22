@@ -5,7 +5,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import com.depromeet.dodo.auth.thirdparty.kakao.response.KakaoProfileResponse;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -31,8 +30,7 @@ public class KakaoAuthApiService {
 	}
 
 	@Getter
-	@AllArgsConstructor
-	public class KakaoErrorResponse {
+	public static class KakaoErrorResponse {
 		private int code;
 		private String msg;
 	}
