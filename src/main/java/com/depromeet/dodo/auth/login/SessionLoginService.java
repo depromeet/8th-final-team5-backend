@@ -4,8 +4,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
 
-import com.depromeet.dodo.user.domain.User;
-
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -17,8 +15,8 @@ public class SessionLoginService implements LoginService {
 	private final HttpSession httpSession;
 
 	@Override
-	public void login(User user) {
-		httpSession.setAttribute(SESSION_LOGIN_KEY, user.getId());
+	public void login(String uid) {
+		httpSession.setAttribute(SESSION_LOGIN_KEY, uid);
 	}
 
 }

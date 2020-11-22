@@ -5,7 +5,7 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import com.depromeet.dodo.auth.common.UserInfo;
-import com.depromeet.dodo.auth.login.SessionLoginService;
+import com.depromeet.dodo.auth.login.LoginService;
 import com.depromeet.dodo.auth.thirdparty.AuthService;
 import com.depromeet.dodo.auth.thirdparty.naver.api.NaverAuthApiService;
 import com.depromeet.dodo.auth.thirdparty.naver.dto.NaverUserProfile;
@@ -26,7 +26,7 @@ public class NaverAuthService implements AuthService<NaverSignUpRequest, NaverSi
 
 	private static final String UID_POSTFIX = "@NAVER";
 
-	private final SessionLoginService sessionLoginService;
+	private final LoginService loginService;
 	private final NaverAuthApiService naverAuthApiService;
 	private final UserService userService;
 	private final PetService petService;
@@ -71,12 +71,7 @@ public class NaverAuthService implements AuthService<NaverSignUpRequest, NaverSi
 		if (naverProfile.getId().equals(request.getPrincipal())) {
 			userRepository.findByUid(request.getPrincipal().concat(UID_POSTFIX))
 				.orElseThrow(() -> new SecurityException("회원가입이 필요한 사용자입니다."));
-
-			User user = User.builder()
-				.uid(request.getCredential())
-				.build();
-
-			sessionLoginService.login(user);
+			loginService.login(request.getCredential());
 		} else {
 			throw new IllegalArgumentException("잘못된 UID 입니다. : " + request.getPrincipal());
 		}
