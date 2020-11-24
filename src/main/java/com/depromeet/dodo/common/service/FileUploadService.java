@@ -22,29 +22,23 @@ public class FileUploadService {
 	private final ImageService imageService;
 
 	public Image singleFileUpload(MultipartFile file) {
-		Image image = null;
-		if (!file.isEmpty()) {
-			String fileName = UUID.randomUUID().toString();
-			image = new Image(s3Service.upload(file, fileName), fileName, SINGLE_FILE_PRIORITY);
-			imageService.addImage(image);
-		}
+		String fileName = UUID.randomUUID().toString();
+		Image image = new Image(s3Service.upload(file, fileName), fileName, SINGLE_FILE_PRIORITY);
+		imageService.addImage(image);
 
 		return image;
 	}
 
 	public List<Image> multiFileUpload(Map<Integer, MultipartFile> files) {
-		List<Image> images = null;
-		if (!images.isEmpty()) {
-			images = files.entrySet()
-				.stream()
-				.map(x -> {
-					String fileName = UUID.randomUUID().toString();
-					Image image = new Image(s3Service.upload(x.getValue(), fileName), fileName, x.getKey());
-					imageService.addImage(image);
-					return image;
-				})
-				.collect(Collectors.toList());
-		}
+		List<Image> images = files.entrySet()
+			.stream()
+			.map(x -> {
+				String fileName = UUID.randomUUID().toString();
+				Image image = new Image(s3Service.upload(x.getValue(), fileName), fileName, x.getKey());
+				imageService.addImage(image);
+				return image;
+			})
+			.collect(Collectors.toList());
 
 		return images;
 	}

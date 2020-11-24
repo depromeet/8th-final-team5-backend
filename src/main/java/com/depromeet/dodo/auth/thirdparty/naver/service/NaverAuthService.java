@@ -57,8 +57,10 @@ public class NaverAuthService implements AuthService<NaverSignUpRequest, NaverSi
 			.vaccination(request.getPetInfo().isVaccination())
 			.build();
 
-		List<Image> petProfiles = fileUploadService.multiFileUpload(request.getPetInfo().getProfileImage());
-		petProfiles.stream().forEach(x -> petProfileService.addImage(pet, x));
+		if (!request.getPetInfo().getProfileImage().isEmpty()) {
+			List<Image> petProfiles = fileUploadService.multiFileUpload(request.getPetInfo().getProfileImage());
+			petProfiles.stream().forEach(x -> petProfileService.addImage(pet, x));
+		}
 		petService.addPet(pet);
 
 		User newUser = User.builder()
@@ -72,8 +74,10 @@ public class NaverAuthService implements AuthService<NaverSignUpRequest, NaverSi
 			.pet(pet)
 			.build();
 
-		Image userProfile = fileUploadService.singleFileUpload(request.getProfileImage());
-		userProfileService.addImage(newUser, userProfile);
+		if (!request.getProfileImage().isEmpty()) {
+			Image userProfile = fileUploadService.singleFileUpload(request.getProfileImage());
+			userProfileService.addImage(newUser, userProfile);
+		}
 		userService.signUp(newUser);
 	}
 
