@@ -28,3 +28,25 @@ CREATE TABLE Pet
 	constraint pet_pk
 		primary key (id)
 );
+
+CREATE TABLE Image
+(
+    id bigint auto_increment primary key,
+    filePath varchar(100) not null,
+    fileName varchar(100) not null,
+    priority int not null
+);
+
+CREATE TABLE PetProfile
+(
+    id bigint auto_increment primary key,
+    imageId bigint not null,
+    petId bigint not null
+);
+
+CREATE TABLE UserProfile
+(
+    id bigint auto_increment primary key,
+    imageId bigint not null,
+    userId bigint not null
+);

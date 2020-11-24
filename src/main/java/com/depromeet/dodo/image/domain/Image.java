@@ -1,44 +1,37 @@
-package com.depromeet.dodo.pet.domain;
+package com.depromeet.dodo.image.domain;
 
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.depromeet.dodo.common.dto.Gender;
-
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @Entity
-@Table(name = "Pet")
+@Table(name = "Image")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@Builder
-public class Pet {
+public class Image {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 
-	private String name;
+	private String filePath;
 
-	@Enumerated(EnumType.STRING)
-	private Gender gender;
+	private String fileName;
 
-	private int age;
+	private int priority;
 
-	private String breed;
-
-	private boolean fixing;
-
-	private boolean vaccination;
+	public Image(String filePath, String fileName, int priority) {
+		this.filePath = filePath;
+		this.fileName = fileName;
+		this.priority = priority;
+	}
 
 }
