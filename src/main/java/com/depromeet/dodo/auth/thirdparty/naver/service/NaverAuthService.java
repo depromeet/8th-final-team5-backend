@@ -1,5 +1,6 @@
 package com.depromeet.dodo.auth.thirdparty.naver.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -14,8 +15,11 @@ import com.depromeet.dodo.auth.thirdparty.naver.dto.NaverUserProfile;
 import com.depromeet.dodo.auth.thirdparty.naver.request.NaverSignInRequest;
 import com.depromeet.dodo.auth.thirdparty.naver.request.NaverSignUpRequest;
 import com.depromeet.dodo.common.dto.Gender;
+import com.depromeet.dodo.common.dto.ImageWithPriority;
+import com.depromeet.dodo.common.dto.ProfileImage;
 import com.depromeet.dodo.common.service.FileUploadService;
 import com.depromeet.dodo.image.domain.Image;
+import com.depromeet.dodo.image.domain.PetProfile;
 import com.depromeet.dodo.image.service.PetProfileService;
 import com.depromeet.dodo.image.service.UserProfileService;
 import com.depromeet.dodo.pet.domain.Pet;
@@ -57,9 +61,8 @@ public class NaverAuthService implements AuthService<NaverSignUpRequest, NaverSi
 			.vaccination(request.getPetInfo().isVaccination())
 			.build();
 
-		if (!request.getPetInfo().getProfileImage().isEmpty()) {
-			List<Image> petProfiles = fileUploadService.multiFileUpload(request.getPetInfo().getProfileImage());
-			petProfiles.stream().forEach(x -> petProfileService.addImage(pet, x));
+		if (!request.getPetInfo().getProfileImages().isEmpty()) {
+			addPetProfile(pet, request.getPetInfo().getProfileImages());
 		}
 		petService.addPet(pet);
 
@@ -103,6 +106,16 @@ public class NaverAuthService implements AuthService<NaverSignUpRequest, NaverSi
 			.gender(Gender.of(naverProfile.getGender()))
 			.profileImageUrl(naverProfile.getProfileImage())
 			.build();
+	}
+
+	private void addPetProfile(Pet pet, List<ProfileImage> profileImages) {
+		List<PetProfile> petProfiles = new ArrayList<>();
+		List<ImageWithPriority> profileWithPriority = fileUploadService.multiFileUpload(profileImages);
+
+		profileWithPriority.stream()
+			.forEach(x -> petProfiles.add(new PetProfile(x.getImage(), pet, x.getPriority())));
+
+		petProfileService.addProfiles(petProfiles);
 	}
 
 	private String generateUserUid(String naverId) {

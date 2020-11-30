@@ -26,12 +26,9 @@ public class Image {
 
 	private String fileName;
 
-	private int priority;
-
-	public Image(String filePath, String fileName, int priority) {
+	public Image(String filePath, String fileName) {
 		this.filePath = filePath;
 		this.fileName = fileName;
-		this.priority = priority;
 	}
 
 }

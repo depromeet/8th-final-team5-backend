@@ -5,9 +5,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
-import com.amazonaws.auth.AWSCredentials;
-import com.amazonaws.auth.AWSCredentialsProvider;
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 
@@ -21,35 +21,16 @@ public class AWSConfig {
 	@Value("${cloud.aws.credentials.secretKey}")
 	private String secretKey;
 
-	@Value("${cloud.aws.region.static}")
-	private String region;
-
 	@Bean
-	public BasicAWSCredentials basicAWSCredentials() {
+	public BasicAWSCredentials AwsCredentials() {
 		return new BasicAWSCredentials(accessKey, secretKey);
 	}
 
 	@Bean
-	public AWSCredentialsProvider awsCredentialsProvider(AWSCredentials awsCredentials) {
-		return new AWSCredentialsProvider() {
-			@Override
-			public AWSCredentials getCredentials() {
-				return awsCredentials;
-			}
-
-			@Override
-			public void refresh() {
-			}
-
-		};
-	}
-
-	@Bean
-	public AmazonS3 amazonS3Client(AWSCredentialsProvider awsCredentialsProvider) {
-		return AmazonS3ClientBuilder
-			.standard()
-			.withCredentials(awsCredentialsProvider)
-			.withRegion(this.region)
+	public AmazonS3 AwsS3Client() {
+		return AmazonS3ClientBuilder.standard()
+			.withRegion(Regions.AP_NORTHEAST_2)
+			.withCredentials(new AWSStaticCredentialsProvider(this.AwsCredentials()))
 			.build();
 	}
 

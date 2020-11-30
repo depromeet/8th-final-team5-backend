@@ -33,15 +33,15 @@ CREATE TABLE Image
 (
     id bigint auto_increment primary key,
     filePath varchar(100) not null,
-    fileName varchar(100) not null,
-    priority int not null
+    fileName varchar(100) not null
 );
 
 CREATE TABLE PetProfile
 (
     id bigint auto_increment primary key,
     imageId bigint not null,
-    petId bigint not null
+    petId bigint not null,
+    priority int not null
 );
 
 CREATE TABLE UserProfile

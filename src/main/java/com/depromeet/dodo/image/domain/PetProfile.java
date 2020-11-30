@@ -11,6 +11,7 @@ import javax.persistence.Table;
 import com.depromeet.dodo.pet.domain.Pet;
 
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -18,6 +19,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "PetProfile")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class PetProfile {
 
 	@Id
@@ -32,9 +34,12 @@ public class PetProfile {
 	@JoinColumn(name = "petId")
 	private Pet pet;
 
-	public PetProfile(Image image, Pet pet) {
+	private int priority;
+
+	public PetProfile(Image image, Pet pet, int priority) {
 		this.image = image;
 		this.pet = pet;
+		this.priority = priority;
 	}
 
 }
