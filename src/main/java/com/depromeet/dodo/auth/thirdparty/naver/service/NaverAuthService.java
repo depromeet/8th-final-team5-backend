@@ -1,13 +1,11 @@
 package com.depromeet.dodo.auth.thirdparty.naver.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
-import com.depromeet.dodo.auth.common.UserInfo;
+import com.depromeet.dodo.auth.common.dto.UserInfo;
+import com.depromeet.dodo.auth.common.service.ProfileUploadService;
 import com.depromeet.dodo.auth.login.LoginService;
 import com.depromeet.dodo.auth.thirdparty.AuthService;
 import com.depromeet.dodo.auth.thirdparty.naver.api.NaverAuthApiService;
@@ -15,13 +13,6 @@ import com.depromeet.dodo.auth.thirdparty.naver.dto.NaverUserProfile;
 import com.depromeet.dodo.auth.thirdparty.naver.request.NaverSignInRequest;
 import com.depromeet.dodo.auth.thirdparty.naver.request.NaverSignUpRequest;
 import com.depromeet.dodo.common.dto.Gender;
-import com.depromeet.dodo.common.dto.ImageWithPriority;
-import com.depromeet.dodo.common.dto.ProfileImage;
-import com.depromeet.dodo.common.service.FileUploadService;
-import com.depromeet.dodo.image.domain.Image;
-import com.depromeet.dodo.image.domain.PetProfile;
-import com.depromeet.dodo.image.service.PetProfileService;
-import com.depromeet.dodo.image.service.UserProfileService;
 import com.depromeet.dodo.pet.domain.Pet;
 import com.depromeet.dodo.pet.service.PetService;
 import com.depromeet.dodo.user.domain.User;
@@ -40,9 +31,7 @@ public class NaverAuthService implements AuthService<NaverSignUpRequest, NaverSi
 	private final NaverAuthApiService naverAuthApiService;
 	private final UserService userService;
 	private final PetService petService;
-	private final PetProfileService petProfileService;
-	private final UserProfileService userProfileService;
-	private final FileUploadService fileUploadService;
+	private final ProfileUploadService profileUploadService;
 
 	private final UserRepository userRepository;
 
@@ -62,7 +51,7 @@ public class NaverAuthService implements AuthService<NaverSignUpRequest, NaverSi
 			.build();
 
 		if (!request.getPetInfo().getProfileImages().isEmpty()) {
-			addPetProfile(pet, request.getPetInfo().getProfileImages());
+			profileUploadService.addPetProfile(pet, request.getPetInfo().getProfileImages());
 		}
 		petService.addPet(pet);
 
@@ -78,8 +67,7 @@ public class NaverAuthService implements AuthService<NaverSignUpRequest, NaverSi
 			.build();
 
 		if (!request.getProfileImage().isEmpty()) {
-			Image userProfile = fileUploadService.singleFileUpload(request.getProfileImage());
-			userProfileService.addImage(newUser, userProfile);
+			profileUploadService.addUserProfile(newUser, request.getProfileImage());
 		}
 		userService.signUp(newUser);
 	}
@@ -106,16 +94,6 @@ public class NaverAuthService implements AuthService<NaverSignUpRequest, NaverSi
 			.gender(Gender.of(naverProfile.getGender()))
 			.profileImageUrl(naverProfile.getProfileImage())
 			.build();
-	}
-
-	private void addPetProfile(Pet pet, List<ProfileImage> profileImages) {
-		List<PetProfile> petProfiles = new ArrayList<>();
-		List<ImageWithPriority> profileWithPriority = fileUploadService.multiFileUpload(profileImages);
-
-		profileWithPriority.stream()
-			.forEach(x -> petProfiles.add(new PetProfile(x.getImage(), pet, x.getPriority())));
-
-		petProfileService.addProfiles(petProfiles);
 	}
 
 	private String generateUserUid(String naverId) {

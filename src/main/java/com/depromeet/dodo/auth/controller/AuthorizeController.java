@@ -10,17 +10,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.depromeet.dodo.auth.common.UserInfo;
+import com.depromeet.dodo.auth.common.dto.UserInfo;
 import com.depromeet.dodo.auth.thirdparty.kakao.request.KakaoSignInRequest;
 import com.depromeet.dodo.auth.thirdparty.kakao.request.KakaoSignUpRequest;
 import com.depromeet.dodo.auth.thirdparty.kakao.service.KakaoAuthService;
 import com.depromeet.dodo.auth.thirdparty.naver.request.NaverSignInRequest;
 import com.depromeet.dodo.auth.thirdparty.naver.request.NaverSignUpRequest;
 import com.depromeet.dodo.auth.thirdparty.naver.service.NaverAuthService;
+import com.depromeet.dodo.common.service.S3Service;
 
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
@@ -28,6 +31,8 @@ public class AuthorizeController {
 
 	private final NaverAuthService naverAuthService;
 	private final KakaoAuthService kakaoAuthService;
+
+	private final S3Service s3Service;
 
 	@GetMapping("/third-parties/naver/users")
 	@ApiOperation("네이버 유저의 정보를 가져오는 API")

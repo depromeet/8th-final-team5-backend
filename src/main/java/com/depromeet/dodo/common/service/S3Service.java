@@ -80,11 +80,11 @@ public class S3Service {
 	@SneakyThrows
 	private List<String> s3UploadFileList(String folderName, List<File> files) {
 		AmazonS3 s3Client = awsConfig.AwsS3Client();
-		TransferManager xfer_mgr = TransferManagerBuilder.standard()
+		TransferManager xferMgr = TransferManagerBuilder.standard()
 			.withS3Client(s3Client)
 			.build();
 
-		MultipleFileUpload xfer = xfer_mgr.uploadFileList(bucket, folderName, new File(filePath), files);
+		MultipleFileUpload xfer = xferMgr.uploadFileList(bucket, folderName, new File(filePath), files);
 
 		try {
 			xfer.waitForCompletion();
@@ -93,7 +93,7 @@ public class S3Service {
 			throw new AwsS3SaveFailedException(e);
 		} finally {
 			files.stream().forEach(x -> x.delete());
-			xfer_mgr.shutdownNow();
+			xferMgr.shutdownNow();
 		}
 
 		List<String> filesUrl = new ArrayList<>();

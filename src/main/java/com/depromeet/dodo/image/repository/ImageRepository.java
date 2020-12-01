@@ -7,5 +7,4 @@ import com.depromeet.dodo.image.domain.Image;
 
 @Repository
 public interface ImageRepository extends JpaRepository<Image, Long> {
-
 }

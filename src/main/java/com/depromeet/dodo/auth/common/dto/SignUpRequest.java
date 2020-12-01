@@ -1,4 +1,4 @@
-package com.depromeet.dodo.auth.common;
+package com.depromeet.dodo.auth.common.dto;
 
 import java.util.List;
 

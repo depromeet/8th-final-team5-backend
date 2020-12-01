@@ -2,7 +2,7 @@ package com.depromeet.dodo.auth.thirdparty.kakao.request;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import com.depromeet.dodo.auth.common.SignUpRequest;
+import com.depromeet.dodo.auth.common.dto.SignUpRequest;
 
 import lombok.Getter;
 

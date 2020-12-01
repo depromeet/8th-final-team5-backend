@@ -1,4 +1,4 @@
-package com.depromeet.dodo.auth.common;
+package com.depromeet.dodo.auth.common.dto;
 
 import com.depromeet.dodo.common.dto.Gender;
 
