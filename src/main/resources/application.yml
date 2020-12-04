@@ -5,9 +5,8 @@ spring:
       naming:
         implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    # spatial 데이터 유형 (Point 사용을 위해) 지원 설정
+    database-platform: org.hibernate.spatial.dialect.mysql.MySQL56InnoDBSpatialDialect
     properties:
       show_sql: true
       format_sql: true
-      hibernate:
-        dialect: org.hibernate.spatial.dialect.mysql.MySQL56InnoDBSpatialDialect

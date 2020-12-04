@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 public class KakaoMapApiService {
 
 	@Value("${kakao.api.map.secret.key}")
-	private final String KAKAO_MAP_AUTH_VALUE;
+	private final String kakaoMapAuthValue;
 	private static final String KAKAO_MAP_AUTH_KEY = "Authorization";
 	private static final String KAKAO_MAP_URL = "https://dapi.kakao.com/v2/local/geo/coord2address.json";
 
@@ -29,7 +29,7 @@ public class KakaoMapApiService {
 	public KakaoMapResponse getAddress(Point point) {
 		return apiWebClient.get()
 			.uri(addQuerystring(KAKAO_MAP_URL, point))
-			.header(KAKAO_MAP_AUTH_KEY, KAKAO_MAP_AUTH_VALUE)
+			.header(KAKAO_MAP_AUTH_KEY, kakaoMapAuthValue)
 			.retrieve()
 			.onStatus(status -> status.is4xxClientError(),
 				response -> response.bodyToMono(KakaoErrorResponse.class)
