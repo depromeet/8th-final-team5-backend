@@ -3,9 +3,9 @@ package com.depromeet.dodo.auth.thirdparty.kakao.api;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import com.depromeet.dodo.auth.common.dto.KakaoErrorResponse;
 import com.depromeet.dodo.auth.thirdparty.kakao.response.KakaoProfileResponse;
 
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -27,12 +27,6 @@ public class KakaoAuthApiService {
 					.map(body -> new IllegalArgumentException(body.getMsg())))
 			.bodyToMono(KakaoProfileResponse.class)
 			.block();
-	}
-
-	@Getter
-	public static class KakaoErrorResponse {
-		private int code;
-		private String msg;
 	}
 
 }

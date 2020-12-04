@@ -5,6 +5,8 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import com.depromeet.dodo.auth.common.dto.UserInfo;
+import com.depromeet.dodo.auth.common.service.KakaoMapApiService;
+import com.depromeet.dodo.auth.common.service.AddressService;
 import com.depromeet.dodo.auth.common.service.ProfileUploadService;
 import com.depromeet.dodo.auth.login.LoginService;
 import com.depromeet.dodo.auth.thirdparty.AuthService;
@@ -13,6 +15,7 @@ import com.depromeet.dodo.auth.thirdparty.kakao.request.KakaoSignInRequest;
 import com.depromeet.dodo.auth.thirdparty.kakao.request.KakaoSignUpRequest;
 import com.depromeet.dodo.auth.thirdparty.kakao.response.KakaoProfileResponse;
 import com.depromeet.dodo.common.dto.Gender;
+import com.depromeet.dodo.location.domain.Location;
 import com.depromeet.dodo.pet.domain.Pet;
 import com.depromeet.dodo.pet.service.PetService;
 import com.depromeet.dodo.user.domain.User;
@@ -29,8 +32,10 @@ public class KakaoAuthService implements AuthService<KakaoSignUpRequest, KakaoSi
 
 	private final LoginService loginService;
 	private final KakaoAuthApiService kakaoAuthApiService;
+	private final KakaoMapApiService kakaoMapApiService;
 	private final UserService userService;
 	private final PetService petService;
+	private final AddressService addressService;
 	private final ProfileUploadService profileUploadService;
 
 	private final UserRepository userRepository;
@@ -55,13 +60,16 @@ public class KakaoAuthService implements AuthService<KakaoSignUpRequest, KakaoSi
 			profileUploadService.addPetProfile(pet, request.getPetInfo().getProfileImages());
 		}
 
+		KakaoMapApiService.KakaoMapResponse response = kakaoMapApiService.getAddress(request.getAddress());
+		Location location = addressService.addLocation(request.getAddress(), response);
+
 		User newUser = User.builder()
 			.uid(generateUserUid(kakaoUserProfile.getId()))
 			.gender(Gender.of(kakaoUserProfile.getKakaoAccount().getGender()))
 			.profileImageUrl(kakaoUserProfile.getKakaoAccount().getProfile().getProfileImageUrl())
 			.introduce(request.getIntroduce())
 			.username(request.getUsername())
-			.address(request.getAddress())
+			.location(location)
 			.age(request.getAge())
 			.pet(pet)
 			.build();

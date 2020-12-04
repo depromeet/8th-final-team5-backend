@@ -11,6 +11,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.depromeet.dodo.common.dto.Gender;
+import com.depromeet.dodo.location.domain.Location;
 import com.depromeet.dodo.pet.domain.Pet;
 
 import lombok.AccessLevel;
@@ -40,11 +41,13 @@ public class User {
 
 	private int age;
 
-	private String address;
-
 	private String introduce;
 
 	private String profileImageUrl;
+
+	@OneToOne
+	@JoinColumn(name = "locationId")
+	private Location location;
 
 	@OneToOne
 	@JoinColumn(name = "petId")

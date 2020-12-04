@@ -12,6 +12,7 @@ create table User
 	introduce varchar(200) null,
 	profileImageUrl varchar(500) null,
 	petId bigint not null,
+	locationId bigint,
 	constraint uid
 		unique (uid)
 );
@@ -49,4 +50,12 @@ CREATE TABLE UserProfile
     id bigint auto_increment primary key,
     imageId bigint not null,
     userId bigint not null
+);
+
+CREATE TABLE Location
+(
+    id bigint auto_increment primary key,
+    point point not null,
+    addressName varchar(100) not null,
+    region3DepthName varchar(100) not null
 );
