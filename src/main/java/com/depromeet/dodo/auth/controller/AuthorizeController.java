@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.depromeet.dodo.auth.common.UserInfo;
+import com.depromeet.dodo.auth.common.dto.UserInfo;
 import com.depromeet.dodo.auth.thirdparty.kakao.request.KakaoSignInRequest;
 import com.depromeet.dodo.auth.thirdparty.kakao.request.KakaoSignUpRequest;
 import com.depromeet.dodo.auth.thirdparty.kakao.service.KakaoAuthService;
@@ -20,7 +20,9 @@ import com.depromeet.dodo.auth.thirdparty.naver.service.NaverAuthService;
 
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor

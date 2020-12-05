@@ -4,7 +4,8 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
-import com.depromeet.dodo.auth.common.UserInfo;
+import com.depromeet.dodo.auth.common.dto.UserInfo;
+import com.depromeet.dodo.auth.common.service.ProfileUploadService;
 import com.depromeet.dodo.auth.login.LoginService;
 import com.depromeet.dodo.auth.thirdparty.AuthService;
 import com.depromeet.dodo.auth.thirdparty.kakao.api.KakaoAuthApiService;
@@ -30,6 +31,7 @@ public class KakaoAuthService implements AuthService<KakaoSignUpRequest, KakaoSi
 	private final KakaoAuthApiService kakaoAuthApiService;
 	private final UserService userService;
 	private final PetService petService;
+	private final ProfileUploadService profileUploadService;
 
 	private final UserRepository userRepository;
 
@@ -49,6 +51,10 @@ public class KakaoAuthService implements AuthService<KakaoSignUpRequest, KakaoSi
 
 		petService.addPet(pet);
 
+		if (!request.getPetInfo().getProfileImages().isEmpty()) {
+			profileUploadService.addPetProfile(pet, request.getPetInfo().getProfileImages());
+		}
+
 		User newUser = User.builder()
 			.uid(generateUserUid(kakaoUserProfile.getId()))
 			.gender(Gender.of(kakaoUserProfile.getKakaoAccount().getGender()))
@@ -61,6 +67,10 @@ public class KakaoAuthService implements AuthService<KakaoSignUpRequest, KakaoSi
 			.build();
 
 		userService.signUp(newUser);
+
+		if (!request.getProfileImage().isEmpty()) {
+			profileUploadService.addUserProfile(newUser, request.getProfileImage());
+		}
 	}
 
 	@Override

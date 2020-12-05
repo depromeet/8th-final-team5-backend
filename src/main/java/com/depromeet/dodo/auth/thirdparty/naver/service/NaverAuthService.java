@@ -4,7 +4,8 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
-import com.depromeet.dodo.auth.common.UserInfo;
+import com.depromeet.dodo.auth.common.dto.UserInfo;
+import com.depromeet.dodo.auth.common.service.ProfileUploadService;
 import com.depromeet.dodo.auth.login.LoginService;
 import com.depromeet.dodo.auth.thirdparty.AuthService;
 import com.depromeet.dodo.auth.thirdparty.naver.api.NaverAuthApiService;
@@ -30,6 +31,7 @@ public class NaverAuthService implements AuthService<NaverSignUpRequest, NaverSi
 	private final NaverAuthApiService naverAuthApiService;
 	private final UserService userService;
 	private final PetService petService;
+	private final ProfileUploadService profileUploadService;
 
 	private final UserRepository userRepository;
 
@@ -48,6 +50,9 @@ public class NaverAuthService implements AuthService<NaverSignUpRequest, NaverSi
 			.vaccination(request.getPetInfo().isVaccination())
 			.build();
 
+		if (!request.getPetInfo().getProfileImages().isEmpty()) {
+			profileUploadService.addPetProfile(pet, request.getPetInfo().getProfileImages());
+		}
 		petService.addPet(pet);
 
 		User newUser = User.builder()
@@ -61,6 +66,9 @@ public class NaverAuthService implements AuthService<NaverSignUpRequest, NaverSi
 			.pet(pet)
 			.build();
 
+		if (!request.getProfileImage().isEmpty()) {
+			profileUploadService.addUserProfile(newUser, request.getProfileImage());
+		}
 		userService.signUp(newUser);
 	}
 

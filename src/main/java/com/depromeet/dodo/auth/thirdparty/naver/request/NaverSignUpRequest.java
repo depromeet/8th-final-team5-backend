@@ -1,6 +1,8 @@
 package com.depromeet.dodo.auth.thirdparty.naver.request;
 
-import com.depromeet.dodo.auth.common.SignUpRequest;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.depromeet.dodo.auth.common.dto.SignUpRequest;
 
 import lombok.Getter;
 
@@ -10,8 +12,8 @@ public class NaverSignUpRequest extends SignUpRequest {
 	private String token;
 
 	public NaverSignUpRequest(String username, int age, String address, String introduce, PetInfo petInfo,
-		String token) {
-		super(username, age, address, introduce, petInfo);
+		String token, MultipartFile profileImage) {
+		super(username, age, address, introduce, petInfo, profileImage);
 		this.token = token;
 	}
 }

@@ -1,8 +1,6 @@
-package com.depromeet.dodo.user.domain;
+package com.depromeet.dodo.image.domain;
 
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -10,44 +8,38 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.depromeet.dodo.common.dto.Gender;
 import com.depromeet.dodo.pet.domain.Pet;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @Entity
-@Table(name = "User")
+@Table(name = "PetProfile")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@Builder
-public class User {
+public class PetProfile {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 
-	private String uid;
-
-	private String username;
-
-	@Enumerated(EnumType.STRING)
-	private Gender gender;
-
-	private int age;
-
-	private String address;
-
-	private String introduce;
-
-	private String profileImageUrl;
+	@OneToOne
+	@JoinColumn(name = "imageId")
+	private Image image;
 
 	@OneToOne
 	@JoinColumn(name = "petId")
 	private Pet pet;
+
+	private int priority;
+
+	public PetProfile(Image image, Pet pet, int priority) {
+		this.image = image;
+		this.pet = pet;
+		this.priority = priority;
+	}
 
 }
