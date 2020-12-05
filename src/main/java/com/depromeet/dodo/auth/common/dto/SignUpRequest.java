@@ -6,6 +6,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.depromeet.dodo.common.dto.Gender;
 import com.depromeet.dodo.common.dto.ProfileImage;
+import com.depromeet.dodo.petInfo.domain.Breed;
+import com.depromeet.dodo.petInfo.domain.Charact;
+import com.depromeet.dodo.petInfo.domain.Interest;
 import com.vividsolutions.jts.geom.Point;
 
 import lombok.AllArgsConstructor;
@@ -28,7 +31,9 @@ public class SignUpRequest {
 		private String name;
 		private Gender gender;
 		private int age;
-		private String breed;
+		private Breed breed;
+		private List<Interest> interests;
+		private List<Charact> characters;
 		private boolean fixing;
 		private boolean vaccination;
 		private List<ProfileImage> profileImages;

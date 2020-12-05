@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.depromeet.dodo.auth.common.dto.UserInfo;
 import com.depromeet.dodo.auth.common.service.AddressService;
+import com.depromeet.dodo.auth.common.service.PetInfoService;
 import com.depromeet.dodo.auth.common.service.ProfileUploadService;
 import com.depromeet.dodo.auth.login.LoginService;
 import com.depromeet.dodo.auth.thirdparty.AuthService;
@@ -36,6 +37,7 @@ public class NaverAuthService implements AuthService<NaverSignUpRequest, NaverSi
 	private final UserService userService;
 	private final PetService petService;
 	private final AddressService addressService;
+	private final PetInfoService petInfoService;
 	private final ProfileUploadService profileUploadService;
 
 	private final UserRepository userRepository;
@@ -48,17 +50,18 @@ public class NaverAuthService implements AuthService<NaverSignUpRequest, NaverSi
 
 		Pet pet = Pet.builder()
 			.age(request.getPetInfo().getAge())
-			.breed(request.getPetInfo().getBreed())
 			.fixing(request.getPetInfo().isFixing())
 			.gender(request.getPetInfo().getGender())
 			.name(request.getPetInfo().getName())
 			.vaccination(request.getPetInfo().isVaccination())
 			.build();
 
+		pet = petService.addPet(pet);
+		petInfoService.addPetInfo(pet, request.getPetInfo());
+
 		if (!request.getPetInfo().getProfileImages().isEmpty()) {
 			profileUploadService.addPetProfile(pet, request.getPetInfo().getProfileImages());
 		}
-		petService.addPet(pet);
 
 		KakaoMapApiService.KakaoMapResponse response = kakaoMapApiService.getAddress(request.getAddress());
 		Location location = addressService.addLocation(request.getAddress(), response);

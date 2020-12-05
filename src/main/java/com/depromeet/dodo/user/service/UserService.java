@@ -16,8 +16,8 @@ public class UserService {
 	private final UserRepository userRepository;
 
 	@Transactional
-	public void signUp(User user) {
+	public User signUp(User user) {
 		// TODO : 추가 로직
-		userRepository.save(user);
+		return userRepository.save(user);
 	}
 }
