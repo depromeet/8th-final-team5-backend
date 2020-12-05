@@ -1,4 +1,4 @@
-package com.depromeet.dodo.auth.common.service;
+package com.depromeet.dodo.location.thirdparty;
 
 import java.util.List;
 
@@ -13,18 +13,20 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.vividsolutions.jts.geom.Point;
 
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 @Component
-@RequiredArgsConstructor
 public class KakaoMapApiService {
 
-	@Value("${kakao.api.map.secret.key}")
-	private final String kakaoMapAuthValue;
 	private static final String KAKAO_MAP_AUTH_KEY = "Authorization";
 	private static final String KAKAO_MAP_URL = "https://dapi.kakao.com/v2/local/geo/coord2address.json";
 
+	private final String kakaoMapAuthValue;
 	private final WebClient apiWebClient;
+
+	public KakaoMapApiService(@Value("${kakao.api.map.secret.key}") String kakaoMapAuthValue, WebClient apiWebClient) {
+		this.kakaoMapAuthValue = kakaoMapAuthValue;
+		this.apiWebClient = apiWebClient;
+	}
 
 	public KakaoMapResponse getAddress(Point point) {
 		return apiWebClient.get()

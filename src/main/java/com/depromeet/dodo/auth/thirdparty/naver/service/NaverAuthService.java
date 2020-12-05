@@ -5,7 +5,6 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import com.depromeet.dodo.auth.common.dto.UserInfo;
-import com.depromeet.dodo.auth.common.service.KakaoMapApiService;
 import com.depromeet.dodo.auth.common.service.AddressService;
 import com.depromeet.dodo.auth.common.service.ProfileUploadService;
 import com.depromeet.dodo.auth.login.LoginService;
@@ -16,6 +15,7 @@ import com.depromeet.dodo.auth.thirdparty.naver.request.NaverSignInRequest;
 import com.depromeet.dodo.auth.thirdparty.naver.request.NaverSignUpRequest;
 import com.depromeet.dodo.common.dto.Gender;
 import com.depromeet.dodo.location.domain.Location;
+import com.depromeet.dodo.location.thirdparty.KakaoMapApiService;
 import com.depromeet.dodo.pet.domain.Pet;
 import com.depromeet.dodo.pet.service.PetService;
 import com.depromeet.dodo.user.domain.User;
