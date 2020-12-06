@@ -1,42 +1,42 @@
 package com.depromeet.dodo.pet.domain;
 
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.depromeet.dodo.common.dto.Gender;
+import com.depromeet.dodo.petInfo.domain.Breed;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @Entity
-@Table(name = "Pet")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "PetBreed")
 @AllArgsConstructor
-@Builder
-public class Pet {
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class PetBreed {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	private String name;
+	@OneToOne
+	@JoinColumn(name = "petId")
+	private Pet pet;
 
-	@Enumerated(EnumType.STRING)
-	private Gender gender;
+	@OneToOne
+	@JoinColumn(name = "breedId")
+	private Breed breed;
 
-	private int age;
-
-	private boolean fixing;
-
-	private boolean vaccination;
+	public PetBreed(Pet pet, Breed breed) {
+		this.pet = pet;
+		this.breed = breed;
+	}
 
 }

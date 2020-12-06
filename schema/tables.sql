@@ -1,4 +1,3 @@
-
 CREATE DATABASE dodo;
 
 create table User
@@ -30,6 +29,47 @@ CREATE TABLE Pet
 		primary key (id)
 );
 
+CREATE TABLE Breed
+(
+    id bigint auto_increment primary key,
+    breed varchar(50)
+);
+
+CREATE TABLE Character
+(
+    id bigint auto_increment primary key,
+    character varchar(50)
+);
+
+
+CREATE TABLE Interest
+(
+    id bigint auto_increment primary key,
+    interest varchar(50)
+);
+
+CREATE TABLE PetBreed
+(
+    id bigint auto_increment primary key,
+    petId bigint not null,
+    breedId bigint not null
+);
+
+CREATE TABLE PetCharacter
+(
+    id bigint auto_increment primary key,
+    petId bigint not null,
+    characterId bigint not null
+);
+
+
+CREATE TABLE PetInterest
+(
+    id bigint auto_increment primary key,
+    petId bigint not null,
+    interestId bigint not null
+);
+
 CREATE TABLE Image
 (
     id bigint auto_increment primary key,
@@ -59,3 +99,4 @@ CREATE TABLE Location
     addressName varchar(100) not null,
     region3DepthName varchar(100) not null
 );
+
