@@ -1,5 +1,6 @@
 CREATE DATABASE dodo;
 
+-- TABLE
 create table User
 (
 	id bigint auto_increment primary key,
@@ -100,3 +101,13 @@ CREATE TABLE Location
     region3DepthName varchar(100) not null
 );
 
+-- INDEX
+CREATE INDEX IDX_USER_PET ON User (petId);
+CREATE INDEX IDX_USER_LOCATION ON User (locationId);
+
+CREATE INDEX IDX_PROFILE_PET ON PetProfile (petId);
+CREATE INDEX IDX_PROFILE_USER ON UserProfile (userId);
+
+CREATE INDEX IDX_BREED_PET ON PetBreed (petId);
+CREATE INDEX IDX_CHARACTER_PET ON PetCharacter (petId);
+CREATE INDEX IDX_INTEREST_PET ON PetInterest (petId);
