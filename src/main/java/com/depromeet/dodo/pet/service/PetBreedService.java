@@ -13,7 +13,7 @@ public class PetBreedService {
 
 	private final PetBreedRepository petBreedRepository;
 
-	public PetBreed addPetBreed(PetBreed petBreed) {
-		return petBreedRepository.save(petBreed);
+	public void addPetBreed(PetBreed petBreed) {
+		petBreedRepository.save(petBreed);
 	}
 }

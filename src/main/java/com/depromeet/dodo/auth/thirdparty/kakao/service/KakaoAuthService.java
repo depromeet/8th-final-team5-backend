@@ -55,7 +55,7 @@ public class KakaoAuthService implements AuthService<KakaoSignUpRequest, KakaoSi
 			.vaccination(request.getPetInfo().isVaccination())
 			.build();
 
-		pet = petService.addPet(pet);
+		petService.addPet(pet);
 		petInfoService.addPetInfo(pet, request.getPetInfo());
 
 		if (!request.getPetInfo().getProfileImages().isEmpty()) {
@@ -76,11 +76,11 @@ public class KakaoAuthService implements AuthService<KakaoSignUpRequest, KakaoSi
 			.pet(pet)
 			.build();
 
-		newUser = userService.signUp(newUser);
-
 		if (!request.getProfileImage().isEmpty()) {
 			profileUploadService.addUserProfile(newUser, request.getProfileImage());
 		}
+
+		userService.signUp(newUser);
 	}
 
 	@Override

@@ -56,7 +56,7 @@ public class NaverAuthService implements AuthService<NaverSignUpRequest, NaverSi
 			.vaccination(request.getPetInfo().isVaccination())
 			.build();
 
-		pet = petService.addPet(pet);
+		petService.addPet(pet);
 		petInfoService.addPetInfo(pet, request.getPetInfo());
 
 		if (!request.getPetInfo().getProfileImages().isEmpty()) {
@@ -80,6 +80,7 @@ public class NaverAuthService implements AuthService<NaverSignUpRequest, NaverSi
 		if (!request.getProfileImage().isEmpty()) {
 			profileUploadService.addUserProfile(newUser, request.getProfileImage());
 		}
+
 		userService.signUp(newUser);
 	}
 

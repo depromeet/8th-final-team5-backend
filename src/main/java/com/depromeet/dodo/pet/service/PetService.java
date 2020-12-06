@@ -13,7 +13,7 @@ public class PetService {
 
 	private final PetRepository petRepository;
 
-	public Pet addPet(Pet pet) {
-		return petRepository.save(pet);
+	public void addPet(Pet pet) {
+		petRepository.save(pet);
 	}
 }
