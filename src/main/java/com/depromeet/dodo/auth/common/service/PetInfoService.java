@@ -1,7 +1,9 @@
 package com.depromeet.dodo.auth.common.service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
@@ -24,12 +26,16 @@ public class PetInfoService {
 	private final PetInterestService petInterestService;
 	private final PetCharacterService petCharacterService;
 
+	@Transactional
 	public void addPetInfo(Pet pet, SignUpRequest.PetInfo petInfo) {
-		List<PetInterest> petInterests = new ArrayList<>();
-		List<PetCharacter> petCharacters = new ArrayList<>();
-
-		petInfo.getInterests().stream().forEach(x -> petInterests.add(new PetInterest(pet, x)));
-		petInfo.getCharacters().stream().forEach(x -> petCharacters.add(new PetCharacter(pet, x)));
+		List<PetInterest> petInterests = petInfo.getInterests()
+			.stream()
+			.map(x -> new PetInterest(pet, x))
+			.collect(Collectors.toList());
+		List<PetCharacter> petCharacters = petInfo.getCharacters()
+			.stream()
+			.map(x -> new PetCharacter(pet, x))
+			.collect(Collectors.toList());
 
 		petBreedService.addPetBreed(new PetBreed(pet, petInfo.getBreed()));
 		petInterestService.addAllPetInterest(petInterests);
