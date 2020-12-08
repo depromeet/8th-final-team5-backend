@@ -25,6 +25,7 @@ public class FileUploadService {
 	public Image singleFileUpload(MultipartFile file) {
 		String fileName = makeFileName(file.getOriginalFilename());
 		Image image = new Image(s3Service.uploadFile(file, fileName), fileName);
+		imageService.addImage(image);
 		return image;
 	}
 
